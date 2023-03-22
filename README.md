@@ -28,3 +28,5 @@ The output video will be saved in .mp4 format.
 The output video will have the same resolution as the input images.
 
 note: All images must be the same resolution. WIP, not responsible or liable and all that jazz. Simple script in python with tinker UI. 
+
+note 2: You can modify the run.bat file how you like, I'm just forgetful and lazy. This just makes it easy on me lol. 
