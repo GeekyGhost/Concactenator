@@ -32,4 +32,4 @@ note: All images must be the same resolution. WIP, not responsible or liable and
 note 2: You can modify the run.bat file how you like, I'm just forgetful and lazy. This just makes it easy on me lol. 
 
 
-Made with assistance from ChatGPT. Primarily for tikerUI. Script is one I wrote and have been using for awhile by just dragging and dropping the images into the folder that was the scripts home. Now that I can do a bit more than just single scripts, wanted to make this a full thing. Slowly expanding it with the help of chatGPT. Original terrible idea and execution that worked? Mine! GUI and new features coming, probably mostly GPT lol. 
+Made with assistance from ChatGPT. Primarily for tkinter UI. Script is one I wrote and have been using for awhile by just dragging and dropping the images into the folder that was the scripts home. Now that I can do a bit more than just single scripts, wanted to make this a full thing. Slowly expanding it with the help of chatGPT. Original terrible idea and execution that worked? Mine! GUI and new features coming, probably mostly GPT lol. 
