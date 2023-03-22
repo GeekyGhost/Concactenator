@@ -1,35 +1,33 @@
 # Concactenator
 Geeky Ghost Designs Image to Video Converter
 
-This script allows you to convert a folder of images into a video with ease. The script uses the MoviePy library to create the video from the images.
+Geeky Ghost Designs - Image/Video Processing Tool
+=================================================
 
-Requirements:
+Description:
+------------
+This Image/Video Processing Tool allows you to extract frames from an MP4 video file and convert a sequence of image files (JPG or PNG) back into a video file. This is useful for video editing, analysis, or other creative projects.
 
-Python 3
-MoviePy library
-How to Install:
+Installation:
+-------------
+1. Make sure you have Python installed on your computer (https://www.python.org/downloads/).
+2. Download the script and place it in a folder along with the "run.bat" file.
+3. Download the "requirements.txt" file and place it in the same folder as the script and "run.bat" file.
 
-Clone the repository or download the files to your computer.
-Open a command prompt or terminal window and navigate to the folder containing the files.
-Create a virtual environment by running the command "python -m venv venv".
-Activate the virtual environment by running "venv\Scripts\activate" on Windows or "source venv/bin/activate" on Linux/MacOS.
-Install the necessary requirements by running "pip install -r requirements.txt".
-How to Use:
+How to use:
+-----------
+1. Double-click the "run.bat" file to start the tool.
+2. The tool will set up a virtual environment, install necessary packages, and launch the Image/Video Processing Tool.
+3. Use the "Browse" button to select the folder containing the image files (JPG or PNG) or the MP4 video file you want to process.
+4. Use the "Save As" button to choose a name and location for the output video file.
+5. Enter the desired frames per second (FPS) for the output video.
+6. Click "Concatenate" to convert the image sequence to a video file, or click "Extractinator" to extract frames from the selected MP4 video file.
+7. The tool will save the output file in the specified location or create a new folder for extracted frames.
 
-Double click the "run.bat" file to launch the Image to Video Converter.
-Click the "Browse" button to select the folder containing the images you want to convert.
-Choose a name and location for the output video by clicking the "Save As" button.
-Select a frame rate for the video by entering a number in the "FPS" field.
-Click the "Convert" button to create the video.
-Notes:
-
-The Image to Video Converter currently only supports .jpg and .png image formats.
-The output video will be saved in .mp4 format.
-The output video will have the same resolution as the input images.
-
-note: All images must be the same resolution. WIP, not responsible or liable and all that jazz. Simple script in python with tkinter UI. 
-
-note 2: You can modify the run.bat file how you like, I'm just forgetful and lazy. This just makes it easy on me lol. 
+Important notes:
+----------------
+- Make sure you run the "run.bat" file instead of running the script directly. The "run.bat" file ensures that the necessary Python packages are installed in a virtual environment.
+- The tool will create an "output" folder in the same directory as the script to store project folders for extracted frames. Each project folder is named "projectXXX", where "XXX" is a unique 3-digit number.
 
 
-Made with assistance from ChatGPT. Primarily for tkinter UI. Script is one I wrote and have been using for awhile by just dragging and dropping the images into the folder that was the scripts home. Now that I can do a bit more than just single scripts, wanted to make this a full thing. Slowly expanding it with the help of chatGPT. Original terrible idea and execution that worked? Mine! GUI and new features coming, probably mostly GPT lol. 
+Combining my custom scripts into useable tools using a UI with the help of GPT4
