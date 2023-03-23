@@ -14,16 +14,16 @@ def get_next_project_folder(base_output_folder):
         i += 1
     return project_folder
 
-def select_mp4_file():
-    mp4_path = filedialog.askopenfilename(filetypes=[("MP4 files", "*.mp4")])
-    return mp4_path
+def select_video_file():
+    video_path = filedialog.askopenfilename(filetypes=[("Video files", "*.mp4;*.avi;*.mkv;*.mov;*.flv;*.wmv")])
+    return video_path
 
 def select_output_folder():
     output_folder = filedialog.askdirectory()
     return output_folder
 
-def extract_frames(mp4_file, output_folder):
-    video = cv2.VideoCapture(mp4_file)
+def extract_frames(video_file, output_folder):
+    video = cv2.VideoCapture(video_file)
 
     if not video.isOpened():
         print("Error: Could not open video file.")
@@ -43,12 +43,11 @@ def extract_frames(mp4_file, output_folder):
     print(f"Frames successfully extracted to {output_folder}")
 
 def start_extraction():
-    mp4_file = select_mp4_file()
     base_output_folder = "output"
     project_folder = get_next_project_folder(base_output_folder)
 
-    if mp4_file and project_folder:
-        extract_frames(mp4_file, project_folder)
+    if video_path.get() and project_folder:
+        extract_frames(video_path.get(), project_folder)
 
 def convert_images_to_video(folder_path, output_file, fps):
     image_paths = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.jpg') or f.endswith('.png')]
@@ -62,15 +61,25 @@ def convert_images_to_video(folder_path, output_file, fps):
 
     print(f"Video saved to {os.path.abspath(output_file)}")
 
-def browse_folder():
-    folder_path.set(filedialog.askdirectory())
+def browse_image_folder():
+    selected_file = filedialog.askopenfilename(title="Choose any file in the folder to be processed",
+                                               filetypes=[("Image files", "*.jpg;*.jpeg;*.png")])
+    if selected_file:
+        selected_folder = os.path.dirname(selected_file)
+        folder_path.set(selected_folder)
+
+def browse_video_file():
+    selected_video_file = filedialog.askopenfilename(filetypes=[("Video files", "*.mp4;*.avi;*.mkv;*.mov;*.flv;*.wmv")])
+    if selected_video_file:
+        video_path.set(selected_video_file)
 
 def save_video():
     output_file.set(filedialog.asksaveasfilename(defaultextension=".mp4"))
 
 def start_conversion():
     project_folder = get_next_project_folder("output")
-    output_file_with_path = os.path.join(project_folder, output_file.get())
+    output_file_name = f"concatenated_video.mp4"
+    output_file_with_path = os.path.join(project_folder, output_file_name)
     convert_images_to_video(folder_path.get(), output_file_with_path, int(fps.get()))
 
 root = tk.Tk()
@@ -79,23 +88,19 @@ root.title("Image/Video Processing")
 folder_path = tk.StringVar()
 output_file = tk.StringVar()
 fps = tk.StringVar(value="15")
+video_path = tk.StringVar()
 
 # Frame for input folder and output file selection
 selection_frame = tk.LabelFrame(root, text="Select Input and Output", padx=5, pady=5)
 selection_frame.grid(row=0, column=0, padx=10, pady=10)
 
-tk.Label(selection_frame, text="Video Path:").grid(row=0, column=0)
+tk.Label(selection_frame, text="Images:").grid(row=0, column=0)
 tk.Entry(selection_frame, textvariable=folder_path).grid(row=0, column=1)
-tk.Button(selection_frame, text="Browse", command=browse_folder).grid(row=0, column=2)
+tk.Button(selection_frame, text="Browse", command=browse_image_folder).grid(row=0, column=2)
 
-tk.Label(selection_frame, text="Output File:").grid(row=1, column=0)
-tk.Entry(selection_frame, textvariable=output_file).grid(row=1, column=1)
-tk.Button(selection_frame, text="Save As", command=save_video).grid(row=1, column=2)
-
-tk.Label(selection_frame, text="Output File:").grid(row=1, column=0)
-tk.Entry(selection_frame, textvariable=output_file).grid(row=1, column=1)
-tk.Button(selection_frame, text="Save As", command=save_video).grid(row=1, column=2)
-
+tk.Label(selection_frame, text="Video:").grid(row=1, column=0)
+tk.Entry(selection_frame, textvariable=video_path).grid(row=1, column=1)
+tk.Button(selection_frame, text="Browse", command=browse_video_file).grid(row=1, column=2)
 
 # Frame for FPS and action buttons
 action_frame = tk.LabelFrame(root, text="Settings and Actions", padx=5, pady=5)
