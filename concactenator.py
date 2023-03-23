@@ -4,6 +4,19 @@ import tkinter as tk
 from tkinter import filedialog
 from moviepy.video.io.ImageSequenceClip import ImageSequenceClip
 
+# Custom colors and fonts
+bg_color = "#1a1a1a"
+text_color = "#00ff00"
+button_color = "#333333"
+button_hover_color = "#4c4c4c"
+font = "Helvetica 10 bold"
+
+def on_enter(e):
+    e.widget.config(bg=button_hover_color)
+
+def on_leave(e):
+    e.widget.config(bg=button_color)
+
 def get_next_project_folder(base_output_folder):
     i = 1
     while True:
@@ -84,6 +97,7 @@ def start_conversion():
 
 root = tk.Tk()
 root.title("Image/Video Processing")
+root.configure(bg=bg_color)
 
 folder_path = tk.StringVar()
 output_file = tk.StringVar()
@@ -91,7 +105,7 @@ fps = tk.StringVar(value="15")
 video_path = tk.StringVar()
 
 # Frame for input folder and output file selection
-selection_frame = tk.LabelFrame(root, text="Select Input and Output", padx=5, pady=5)
+selection_frame = tk.LabelFrame(root, text="Select Input and Output", padx=5, pady=5, bg=bg_color, fg=text_color)
 selection_frame.grid(row=0, column=0, padx=10, pady=10)
 
 tk.Label(selection_frame, text="Images:").grid(row=0, column=0)
@@ -103,7 +117,7 @@ tk.Entry(selection_frame, textvariable=video_path).grid(row=1, column=1)
 tk.Button(selection_frame, text="Browse", command=browse_video_file).grid(row=1, column=2)
 
 # Frame for FPS and action buttons
-action_frame = tk.LabelFrame(root, text="Settings and Actions", padx=5, pady=5)
+action_frame = tk.LabelFrame(root, text="Settings and Actions", padx=5, pady=5, bg=bg_color, fg=text_color)
 action_frame.grid(row=1, column=0, padx=10, pady=10)
 
 tk.Label(action_frame, text="FPS:").grid(row=0, column=0)
@@ -111,5 +125,15 @@ tk.Entry(action_frame, textvariable=fps).grid(row=0, column=1)
 
 tk.Button(action_frame, text="Concatenate", command=start_conversion).grid(row=1, column=0, padx=5, pady=5)
 tk.Button(action_frame, text="Extractinator", command=start_extraction).grid(row=1, column=1, padx=5, pady=5)
+
+# Customize UI elements
+for element in (root, selection_frame, action_frame):
+    for child in element.winfo_children():
+        if isinstance(child, (tk.Label, tk.Entry, tk.LabelFrame)):
+            child.config(bg=bg_color, fg=text_color, font=font)
+        elif isinstance(child, tk.Button):
+            child.config(bg=button_color, fg=text_color, font=font, activebackground=button_hover_color, activeforeground=text_color)
+            child.bind("<Enter>", on_enter)
+            child.bind("<Leave>", on_leave)
 
 root.mainloop()
