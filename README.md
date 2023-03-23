@@ -23,4 +23,8 @@ Important notes:
 
 Make sure you run the "run.bat" file instead of running the script directly. The "run.bat" file ensures that the necessary Python packages are installed in a virtual environment.
 The tool will create an "output" folder in the same directory as the script to store project folders for extracted frames or the output video. Each project folder is named "projectXXX", where "XXX" is a unique 3-digit number.
-Combining custom scripts into useable tools using a UI with the help of GPT-4.
+
+Combining custom scripts into useable tools utilizing a python UI with the help of GPT-4.
+
+
+![ConcactenatorUI](https://user-images.githubusercontent.com/111990299/227387942-cd18aa57-79bb-4e45-b61a-41df4a8941de.png)
