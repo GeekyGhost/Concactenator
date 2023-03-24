@@ -49,6 +49,11 @@ def extract_frames(video_file, output_folder):
         return
 
     frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+    fps = int(video.get(cv2.CAP_PROP_FPS))
+
+    # Extract audio
+    audio_file = os.path.join(output_folder, "audio.mp3")
+    os.system(f"ffmpeg -i {video_file} -vn -acodec copy {audio_file}")
 
     for i in range(frame_count):
         ret, frame = video.read()
