@@ -25,4 +25,5 @@ The tool will create an "output" folder in the same directory as the script to s
 The tool supports adding an audio file to the final video. The supported audio file formats are MP3, WAV, and OGG.
 
 
-![ConcactenatorUI](https://user-images.githubusercontent.com/111990299/227387942-cd18aa57-79bb-4e45-b61a-41df4a8941de.png)
+![Screenshot 2023-03-24 002643](https://user-images.githubusercontent.com/111990299/227424353-38703824-d1e7-4e27-a4ac-12104bd5b90e.png)
+
