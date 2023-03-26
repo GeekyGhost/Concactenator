@@ -202,7 +202,7 @@ tk.Label(action_frame, text="FPS:").grid(row=0, column=0)
 tk.Entry(action_frame, textvariable=fps).grid(row=0, column=1)
 
 tk.Button(action_frame, text="Concatenate", command=start_conversion).grid(row=1, column=0, padx=5, pady=5)
-tk.Button(action_frame, text="Extractinator", command=start_extraction).grid(row=1, column=1, padx=5, pady=5)
+tk.Button(action_frame, text="Extractenator", command=start_extraction).grid(row=1, column=1, padx=5, pady=5)
 
 # Customize UI elements
 for element in (root, selection_frame, action_frame):
