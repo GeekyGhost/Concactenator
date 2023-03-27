@@ -1,5 +1,6 @@
 import os
 import cv2
+import librosa
 import tkinter as tk
 import numpy as np
 from tkinter import filedialog
@@ -7,7 +8,6 @@ from moviepy.video.io.ImageSequenceClip import ImageSequenceClip
 from moviepy.editor import concatenate_videoclips, ImageClip
 from moviepy.editor import AudioFileClip
 from aubio import source, tempo
-
 
 # Custom colors and fonts
 bg_color = "#1e1e1e"
@@ -37,30 +37,37 @@ def browse_audio_file():
     if selected_audio_file:
         audio_path.set(selected_audio_file)
 
-def extract_beats(audio_file):
-    win_s = 512                 # fft size
-    hop_s = win_s // 2          # hop size
+def create_video_with_audio_duration(image_folder, output_file, fps, audio_duration, audio_clip=None):
+    image_paths = [os.path.join(image_folder, f) for f in os.listdir(image_folder) if f.endswith('.jpg') or f.endswith('.png')]
 
-    samplerate = 0
-    s = source(audio_file, samplerate, hop_s)
-    samplerate = s.samplerate
-    o = tempo("default", win_s, hop_s, samplerate)
+    if not image_paths:
+        print(f"No image files found in {image_folder}")
+        return
 
-    beats = []
+    # Calculate the duration of each image clip based on the audio duration
+    duration_per_image = audio_duration / len(image_paths)
 
-    # total number of frames read
-    total_frames = 0
-    while True:
-        samples, read = s()
-        is_beat = o(samples)
-        if is_beat:
-            this_beat = o.get_last_s()
-            beats.append(this_beat)
-        total_frames += read
-        if read < hop_s:
-            break
+    # Load the images as clips and set their durations
+    image_clips = [ImageClip(img_path).set_duration(duration_per_image) for img_path in image_paths]
 
-    return np.array(beats)
+    # Create the final video clip by concatenating the image clips
+    final_clip = concatenate_videoclips(image_clips, method="compose")
+
+    # Add audio if provided
+    if audio_clip is not None:
+        audio_clip = audio_clip.set_duration(audio_duration)
+        final_clip = final_clip.set_audio(audio_clip)
+
+    # Write the video file
+    final_clip.fps = fps
+    final_clip.write_videofile(output_file, codec='libx264')
+
+def extract_onsets(audio_file):
+    y, sr = librosa.load(audio_file)
+    hop_length = 512  # adjust this value to change the time resolution
+    onsets = librosa.onset.onset_detect(y=y, sr=sr, hop_length=hop_length)
+    onset_times = librosa.frames_to_time(onsets, sr=sr, hop_length=hop_length)
+    return onset_times
 
 def select_video_file():
     video_path = filedialog.askopenfilename(filetypes=[("Video files", "*.mp4;*.avi;*.mkv;*.mov;*.flv;*.wmv")])
@@ -153,18 +160,42 @@ def start_conversion():
     else:
         convert_images_to_video(folder_path.get(), output_file_with_path, int(fps.get()))
 
-def create_video_with_audio_duration(folder_path, output_file, fps, audio_duration, audio_clip):
+def convert_images_to_video_with_rhythm(folder_path, output_file, onset_times):
     image_paths = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if f.endswith('.jpg') or f.endswith('.png')]
 
     if not image_paths:
         print(f"No image files found in {folder_path}")
         return
 
-    image_duration = audio_duration / len(image_paths)
-    image_clips = [ImageClip(p).set_duration(image_duration).resize(height=480) for p in image_paths]
+    # Compute onset intervals
+    onset_intervals = np.diff(onset_times)
+    interval_mean = np.mean(onset_intervals)
 
-    video = concatenate_videoclips(image_clips, method="compose").set_audio(audio_clip)
-    video.write_videofile(output_file, fps=fps)
+    # Load audio clip
+    audio_file = audio_path.get()
+    if audio_file and os.path.exists(audio_file):
+        audio_clip = AudioFileClip(audio_file)
+    else:
+        audio_clip = None
+
+    # Create video clip
+    image_clips = []
+    start_time = 0.0
+    for i, path in enumerate(image_paths):
+        end_time = start_time + interval_mean
+        if i < len(onset_intervals):
+            end_time += onset_intervals[i] - interval_mean
+        duration = end_time - start_time
+        image_clip = ImageClip(path).set_duration(duration).resize(height=480)
+        image_clips.append(image_clip)
+        start_time = end_time
+
+    if audio_clip:
+        video = concatenate_videoclips(image_clips, method="compose").set_audio(audio_clip)
+    else:
+        video = concatenate_videoclips(image_clips, method="compose")
+
+    video.write_videofile(output_file)
 
     print(f"Video saved to {os.path.abspath(output_file)}")
 
@@ -215,3 +246,4 @@ for element in (root, selection_frame, action_frame):
             child.bind("<Leave>", on_leave)
 
 root.mainloop()
+
