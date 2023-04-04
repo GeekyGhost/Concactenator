@@ -1,13 +1,13 @@
 import os
 import cv2
 import librosa
-import tkinter as tk
 import numpy as np
+import tkinter as tk
 from tkinter import filedialog
-from moviepy.video.io.ImageSequenceClip import ImageSequenceClip
-from moviepy.editor import concatenate_videoclips, ImageClip
-from moviepy.editor import AudioFileClip
 from aubio import source, tempo
+from moviepy.editor import AudioFileClip
+from moviepy.editor import concatenate_videoclips, ImageClip
+from moviepy.video.io.ImageSequenceClip import ImageSequenceClip
 
 # Custom colors and fonts
 bg_color = "#1e1e1e"
@@ -244,7 +244,6 @@ def reverse_and_save_video():
         return
 
     reverse_video(input_file, output_file)
-
 
 root = tk.Tk()
 root.title("Image/Video Processing")
