@@ -199,6 +199,53 @@ def convert_images_to_video_with_rhythm(folder_path, output_file, onset_times):
 
     print(f"Video saved to {os.path.abspath(output_file)}")
 
+def reverse_video(input_file, output_file):
+    video = cv2.VideoCapture(input_file)
+
+    if not video.isOpened():
+        print("Error: Could not open video file.")
+        return
+
+    frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+    fps = int(video.get(cv2.CAP_PROP_FPS))
+
+    frames = []
+    for i in range(frame_count):
+        ret, frame = video.read()
+        if not ret:
+            break
+        frames.append(frame)
+
+    video.release()
+
+    frames.reverse()
+
+    height, width, _ = frames[0].shape
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(output_file, fourcc, fps, (width, height))
+
+    for frame in frames:
+        out.write(frame)
+
+    out.release()
+    print(f"Reversed video saved to {output_file}")
+
+def reverse_and_save_video():
+    input_file = video_path.get()
+
+    if not input_file:
+        print("Error: No video file selected.")
+        return
+
+    output_file = filedialog.asksaveasfilename(defaultextension=".mp4")
+
+    if not output_file:
+        print("Error: No output file specified.")
+        return
+
+    reverse_video(input_file, output_file)
+
+
 root = tk.Tk()
 root.title("Image/Video Processing")
 root.configure(bg=bg_color)
@@ -235,6 +282,8 @@ tk.Entry(action_frame, textvariable=fps).grid(row=0, column=1)
 tk.Button(action_frame, text="Concatenate", command=start_conversion).grid(row=1, column=0, padx=5, pady=5)
 tk.Button(action_frame, text="Extractenator", command=start_extraction).grid(row=1, column=1, padx=5, pady=5)
 
+tk.Button(action_frame, text="Reverse Video", command=reverse_and_save_video).grid(row=1, column=2, padx=5, pady=5)
+
 # Customize UI elements
 for element in (root, selection_frame, action_frame):
     for child in element.winfo_children():
@@ -246,4 +295,3 @@ for element in (root, selection_frame, action_frame):
             child.bind("<Leave>", on_leave)
 
 root.mainloop()
-
