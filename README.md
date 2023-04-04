@@ -54,4 +54,16 @@ Please note that this script is provided as-is, and the developers are not respo
 
 
 V4
+
+This is a Python script that provides a user interface for various image and video processing tasks. It imports several libraries including OpenCV (cv2), librosa, and tkinter. The potential uses of the script include:
+
+Extracting frames from a video file and saving them as individual image files.
+Reversing a video file and saving the reversed version.
+Concatenating a series of image files into a video file, with or without an accompanying audio file.
+Converting a series of image files into a video file that is synchronized with a rhythm defined by the onsets of an accompanying audio file.
+Providing a graphical user interface for selecting input and output files and specifying various parameters such as frame rate (fps).
+The script includes functions for browsing and selecting files, as well as for performing the specific image and video processing tasks described above. The UI is built using tkinter, and includes various buttons and input fields for specifying parameters and triggering actions. The script also defines several custom colors and fonts for the UI elements.
+
+A tool for processing image and video files, and could be useful for a wide range of applications, from video editing and content creation to scientific research involving image and video analysis.
+
 ![Screenshot 2023-04-04 150548](https://user-images.githubusercontent.com/111990299/229894912-e0eb9359-3059-470e-b9d4-778131417f11.png)
