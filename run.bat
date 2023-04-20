@@ -11,6 +11,6 @@ echo Installing the necessary requirements...
 pip install -r requirements.txt
 
 echo Launching the Concactenator!...
-python concactenator.py
+python main.py
 
 pause
