@@ -1,5 +1,5 @@
 Image and Video Processing Tool
-This is a simple Python-based image and video processing tool that provides several functionalities such as concatenating images into a video, extracting frames from a video, reversing a video, and concatenating two videos.
+This is a simple Python-based image and video processing tool that provides several functionalities such as concatenating images into a video, extracting frames from a video, reversing a video, and concatenating two videos. It was made with the assistance of chatGPT
 
 Features
 Concatenate images into a video
