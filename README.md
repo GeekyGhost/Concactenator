@@ -1,69 +1,83 @@
-Title: Image/Video Processing Tool
-Version: 1.0
-Date: 2023-03-27
+Image and Video Processing Tool
+This is a simple Python-based image and video processing tool that provides several functionalities such as concatenating images into a video, extracting frames from a video, reversing a video, and concatenating two videos.
 
-Description
-This is a Python script that provides a graphical user interface (GUI) to process images and create videos. It allows users to concatenate a sequence of images into a video, extract frames from a video file, and synchronize the resulting video with an audio file. This tool can be used for various content creation and AI generation purposes, including the creation of 2D style animations.
-
-How It Works
-The script utilizes the following Python libraries:
+Features
+Concatenate images into a video
+Extract frames from a video
+Reverse a video
+Concatenate two videos
+Requirements
+To use this tool, you need to have the following Python packages installed:
 
 OpenCV (cv2)
 LibROSA
-Tkinter
-NumPy
 MoviePy
-Aubio
-The GUI allows users to:
+NumPy
+Tkinter
+You can install them using the following command:
 
-Browse and select image, video, and audio files.
-Set the desired frames per second (FPS) for the output video.
-Perform the following actions:
-Concatenate: Creates a video by concatenating a sequence of images.
-Extractenator: Extracts frames from a video file and saves them as individual images.
-Users can also create a video where images are displayed according to the rhythm of an audio file. The script uses the LibROSA library to extract the onset times of audio events and then synchronizes the images accordingly.
+Copy code
+pip install opencv-python librosa moviepy numpy tk
+Usage
+Run the script using a Python interpreter:
+Copy code
+python image_video_processing.py
+Select the appropriate files for the operation you want to perform:
 
-How to Use
-To use this script, ensure that you have Python and the required libraries installed on your system. Then, run the script, and the GUI will appear. Follow these steps to create your desired output:
+For concatenating images into a video, select an image folder, an optional audio file, and set the desired FPS.
+For extracting frames from a video, select a video file.
+For reversing a video, select a video file.
+For concatenating two videos, select two video files.
+Click the corresponding button to perform the desired operation.
 
-For concatenating images into a video:
+Functions
 
-Browse and select the folder containing the images you want to use.
-(Optional) Browse and select an audio file to synchronize with the video.
-Set the desired FPS for the output video.
-Click the "Concatenate" button.
-For extracting frames from a video:
+Here is a brief description of the functions used in the script:
 
-Browse and select the video file you want to extract frames from.
-Click the "Extractenator" button.
-For creating a video with images displayed according to the rhythm of an audio file:
+get_next_project_folder(base_output_folder): Returns the next available project folder for output.
 
-Browse and select the folder containing the images you want to use.
-Browse and select an audio file to synchronize with the video.
-Set the desired FPS for the output video.
-Click the "Concatenate" button.
-Potential for 2D Style Animation Process
-This tool can be employed in a 2D style animation process by providing a sequence of hand-drawn or digitally generated images as input. The script will then concatenate these images into a video. By synchronizing the video with an audio file, users can create an animation that follows the rhythm of the audio track. This allows for the production of dynamic, engaging 2D animations with minimal effort.
+browse_audio_file(): Opens a file dialog to select an audio file.
+create_video_with_audio_duration(...): Creates a video by concatenating images and setting their duration based on the audio duration.
 
-Disclaimer
-Please note that this script is provided as-is, and the developers are not responsible for any damages or loss resulting from its use. Ensure that you have the appropriate rights to use any media files you choose to process with this tool.
+select_video_file(): Opens a file dialog to select a video file.
+
+select_output_folder(): Opens a directory dialog to select an output folder.
+
+extract_frames(video_file, output_folder): Extracts frames from a video and saves them in the output folder.
+
+extract_and_reverse_frames(video_file, output_folder): Extracts and reverses frames from a video and saves them in the output folder.
+
+start_extraction(): Starts the frame extraction process.
+
+concatenate_videos_and_save(): Concatenates two videos and saves the output.
+
+convert_images_to_video(folder_path, output_file, fps): Converts a folder of images into a video file with the specified FPS.
+
+browse_image_folder(): Opens a file dialog to select an image folder.
+
+browse_video_file(): Opens a file dialog to select a video file.
+
+save_video(): Opens a file dialog to select the output video file.
+
+start_conversion(): Starts the conversion process for creating a video from images.
+
+convert_images_to_video_with_rhythm(...): Converts a folder of images into a video file synchronized with the rhythm of an audio file.
+
+reverse_video(input_file, output_file): Reverses a video file and saves the output.
+
+reverse_and_save_video(): Reverses a video file and saves the output.
+
+concatenate_selected_videos(): Concatenates the selected video files.
+
+browse_video_file_2(): Opens a file dialog to select a second video file.
+
+License
+
+This project is released under the MIT License.
+
+Updated 4/20/2023
 
 
-![Screenshot 2023-03-24 002643](https://user-images.githubusercontent.com/111990299/227424353-38703824-d1e7-4e27-a4ac-12104bd5b90e.png)
-![Screenshot 2023-03-27 035943](https://user-images.githubusercontent.com/111990299/227878586-23ee7363-9a18-4cb5-9ce1-2216283a1180.png)
 
+![Screenshot 2023-04-20 095247](https://user-images.githubusercontent.com/111990299/233403086-db32983d-9b00-415e-b6a2-b15d8232b4c6.png)
 
-V4
-
-This is a Python script that provides a user interface for various image and video processing tasks. It imports several libraries including OpenCV (cv2), librosa, and tkinter. The potential uses of the script include:
-
-Extracting frames from a video file and saving them as individual image files.
-Reversing a video file and saving the reversed version.
-Concatenating a series of image files into a video file, with or without an accompanying audio file.
-Converting a series of image files into a video file that is synchronized with a rhythm defined by the onsets of an accompanying audio file.
-Providing a graphical user interface for selecting input and output files and specifying various parameters such as frame rate (fps).
-The script includes functions for browsing and selecting files, as well as for performing the specific image and video processing tasks described above. The UI is built using tkinter, and includes various buttons and input fields for specifying parameters and triggering actions. The script also defines several custom colors and fonts for the UI elements.
-
-A tool for processing image and video files, and could be useful for a wide range of applications, from video editing and content creation to scientific research involving image and video analysis.
-
-![Screenshot 2023-04-04 150548](https://user-images.githubusercontent.com/111990299/229894912-e0eb9359-3059-470e-b9d4-778131417f11.png)
