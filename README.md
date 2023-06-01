@@ -1,75 +1,62 @@
-Image and Video Processing Tool
-This is a simple Python-based image and video processing tool that provides several functionalities such as concatenating images into a video, extracting frames from a video, reversing a video, and concatenating two videos. It was made with the assistance of chatGPT
+# Documentation for Video Processing Python Script
 
-Features
-Concatenate images into a video
-Extract frames from a video
-Reverse a video
-Concatenate two videos
-Requirements
-To use this tool, you need to have the following Python packages installed:
+The following code is a Python script using tkinter, moviepy, pydub, and other libraries to create a GUI application for basic video processing tasks.
 
-OpenCV (cv2)
-LibROSA
-MoviePy
-NumPy
-Tkinter
-You can install them using the following command:
+Here's a step-by-step guide to using this program:
 
-Copy code
-pip install opencv-python librosa moviepy numpy tk
-Usage
-Run the script using a Python interpreter:
-Copy code
-python image_video_processing.py
-Select the appropriate files for the operation you want to perform:
+## Getting Started
 
-For concatenating images into a video, select an image folder, an optional audio file, and set the desired FPS.
-For extracting frames from a video, select a video file.
-For reversing a video, select a video file.
-For concatenating two videos, select two video files.
-Click the corresponding button to perform the desired operation.
+First, make sure you have the following Python libraries installed. You can install these using pip:
+- os
+- cv2 (OpenCV)
+- librosa
+- subprocess
+- numpy
+- tkinter
+- pydub
+- moviepy
 
-Functions
+## Understanding the Code
 
-Here is a brief description of the functions used in the script:
+This application allows you to perform various video processing tasks including:
 
-get_next_project_folder(base_output_folder): Returns the next available project folder for output.
+1. Video and audio file selection and concatenation.
+2. Image to video conversion with or without audio.
+3. Video reverse and frame extraction.
+4. Conversion of images to video with rhythm (i.e., timing changes based on an audio file's rhythm).
 
-browse_audio_file(): Opens a file dialog to select an audio file.
-create_video_with_audio_duration(...): Creates a video by concatenating images and setting their duration based on the audio duration.
+Each of these tasks is performed by a separate function in the code. The tkinter library is used to create a GUI (Graphical User Interface) for ease of use. The GUI includes buttons for each task and file selection dialogues for input and output files.
 
-select_video_file(): Opens a file dialog to select a video file.
+### Selecting Files
 
-select_output_folder(): Opens a directory dialog to select an output folder.
+To use this program, select the image, video, and/or audio files you want to process by clicking the 'Browse' button next to each field. 
 
-extract_frames(video_file, output_folder): Extracts frames from a video and saves them in the output folder.
+### Setting FPS
 
-extract_and_reverse_frames(video_file, output_folder): Extracts and reverses frames from a video and saves them in the output folder.
+FPS (Frames Per Second) can be set in the 'FPS' field. The default value is 15.
 
-start_extraction(): Starts the frame extraction process.
+### Executing Tasks
 
-concatenate_videos_and_save(): Concatenates two videos and saves the output.
+Click the 'Execute' button next to each task to run it. The output will be saved in the specified output folder.
 
-convert_images_to_video(folder_path, output_file, fps): Converts a folder of images into a video file with the specified FPS.
+## Key Functions
 
-browse_image_folder(): Opens a file dialog to select an image folder.
+Here are brief explanations for some of the key functions in the script:
 
-browse_video_file(): Opens a file dialog to select a video file.
+- `select_output_folder()`: Asks the user to select an output directory using a file dialog.
+- `browse_audio_file()`: Asks the user to select an audio file.
+- `browse_image_folder()`: Asks the user to select a folder of images.
+- `browse_video_file()`: Asks the user to select a video file.
+- `extract_frames()`: Extracts frames from a video and saves them as images.
+- `create_video_with_audio_duration()`: Creates a video from a folder of images, timing the images to match the duration of an audio file.
+- `convert_images_to_video()`: Converts a folder of images into a video.
+- `reverse_video()`: Reverses a video.
 
-save_video(): Opens a file dialog to select the output video file.
+**Note**: Always ensure that the filepaths to the files you want to process are valid and that the files exist. The output will be saved to the chosen output directory, so make sure you have write access to the directory.
 
-start_conversion(): Starts the conversion process for creating a video from images.
+This tool is great for basic video processing tasks, such as creating a video from a set of images or adding an audio track to a video. It's straightforward to use, making it perfect for beginners, and the modular code design makes it easy to add more complex features if needed.
 
-convert_images_to_video_with_rhythm(...): Converts a folder of images into a video file synchronized with the rhythm of an audio file.
-
-reverse_video(input_file, output_file): Reverses a video file and saves the output.
-
-reverse_and_save_video(): Reverses a video file and saves the output.
-
-concatenate_selected_videos(): Concatenates the selected video files.
-
-browse_video_file_2(): Opens a file dialog to select a second video file.
+Remember, if you are processing large files or a large number of files, these operations may take some time to complete. Please be patient while the tool does its work.
 
 License
 
