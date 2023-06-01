@@ -1,5 +1,4 @@
 The MIT License (MIT)
-Copyright © 2023 Geeky Ghost Designs(tm)
 
 For the puspose of this license The "Software" refers to The "Concactenator" and it's associated txt, py, and bat files. 
 
