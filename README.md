@@ -65,7 +65,8 @@ This project is released under the MIT License.
 Updated 4/20/2023
 
 
-![Screenshot 2023-05-31 223103](https://github.com/GeekyGhost/Concactenator/assets/111990299/72050022-779e-425a-9953-6edee0dfe38f)
+
+<img width="381" alt="Screenshot 2024-05-27 222502" src="https://github.com/GeekyGhost/Concactenator/assets/111990299/d5b676a0-c2a2-4923-ae5e-0660982bad54">
 
 
 
