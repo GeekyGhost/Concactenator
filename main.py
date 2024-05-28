@@ -355,6 +355,44 @@ def concatenate_audios_and_save():
 
     print(f"Concatenated audio saved to {output_file}")
 
+def compress_video(video_file, target_size=4):
+    """
+    Compresses a video file using ffmpeg, targeting a specific file size in MB.
+
+    Args:
+        video_file (str): The path to the input video file.
+        target_size (int, optional): The target file size in MB. Defaults to 4 MB.
+
+    Returns:
+        str: The path to the compressed video file.
+    """
+    output_file = video_file.replace('.mp4', '_compressed.mp4')
+    target_size_bytes = target_size * 1024 * 1024  # Convert target size to bytes
+
+    # Set the initial bitrate for video and audio
+    video_bitrate = '256k'
+    audio_bitrate = '22k'
+
+    # Calculate the video duration in seconds
+    probe = subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'default=noprint_wrappers=1:nokey=1', video_file], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    video_duration = float(probe.stdout.strip())
+
+    # Calculate the target bitrate based on the target file size and video duration
+    target_bitrate = int(target_size_bytes * 8 / video_duration)
+
+    # Set the video bitrate based on the target bitrate
+    video_bitrate = f'{target_bitrate // 1000}k'
+
+    # Construct the ffmpeg command
+    command = f'ffmpeg -y -i "{video_file}" -c:v libx264 -crf 64 -c:a aac -b:a {audio_bitrate} -b:v {video_bitrate} -bufsize {target_bitrate // 64}k -maxrate {target_bitrate // 1000}k -max_muxing_queue_size 4096 "{output_file}"'
+
+    subprocess.run(command, shell=True)
+
+def light_compress_video(video_file):
+    output_file = video_file.replace('.mp4', '_compressed.mp4')
+    command = f'ffmpeg -i "{video_file}" -c:v libx264 -crf 23 -c:a aac -b:a 32K -b:v 10M -max_muxing_queue_size 4096 "{output_file}"'
+    subprocess.run(command, shell=True)
+
 
 root = tk.Tk()
 root.title("Image/Video Processing")
@@ -389,6 +427,7 @@ tk.Label(selection_frame, text="Primary Audio:").grid(row=3, column=0)
 tk.Entry(selection_frame, textvariable=audio_path).grid(row=3, column=1)
 tk.Button(selection_frame, text="Browse", command=browse_audio_file).grid(row=3, column=2)
 
+
 tk.Label(selection_frame, text="Concatenating Audio:").grid(row=4, column=0)
 tk.Entry(selection_frame, textvariable=audio_path_2).grid(row=4, column=1)
 tk.Button(selection_frame, text="Browse", command=browse_audio_file2).grid(row=4, column=2)
@@ -410,6 +449,18 @@ tk.Button(action_frame, text="Reverse Video", command=reverse_and_save_video).gr
 tk.Button(action_frame, text="Concatenate Videos", command=concatenate_videos_and_save).grid(row=2, column=0, padx=5, pady=5)
 
 tk.Button(action_frame, text="Concatenate Audio", command=concatenate_audios_and_save).grid(row=2, column=2, padx=5, pady=5)
+
+#compression
+compression_frame = tk.LabelFrame(action_frame, text="Compression", padx=5, pady=5, bg=bg_color, fg=text_color)
+compression_frame.grid(row=3, column=0, padx=10, pady=10)
+
+tk.Button(compression_frame, text="Extreme Compress Video", command=lambda: compress_video(video_path.get())).grid(row=0, column=0, padx=5, pady=5)
+
+# Lossless compression
+losslessCompression_frame = tk.LabelFrame(action_frame, text="Lossless Compression", padx=5, pady=5, bg=bg_color, fg=text_color)
+losslessCompression_frame.grid(row=4, column=0, padx=10, pady=10)
+
+tk.Button(losslessCompression_frame, text="Normal Compress Video", command=lambda: light_compress_video(video_path.get())).grid(row=0, column=0, padx=5, pady=5)
 
 # Customize UI elements
 for element in (root, selection_frame, action_frame):
