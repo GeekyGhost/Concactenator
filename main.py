@@ -384,7 +384,7 @@ def compress_video(video_file, target_size=4):
     video_bitrate = f'{target_bitrate // 1000}k'
 
     # Construct the ffmpeg command
-    command = f'ffmpeg -y -i "{video_file}" -c:v libx264 -crf 64 -c:a aac -b:a {audio_bitrate} -b:v {video_bitrate} -bufsize {target_bitrate // 64}k -maxrate {target_bitrate // 1000}k -max_muxing_queue_size 4096 "{output_file}"'
+    command = f'ffmpeg -y -i "{video_file}" -c:v libx264 -crf 66 -c:a aac -b:a {audio_bitrate} -b:v {video_bitrate} -bufsize {target_bitrate // 66}k -maxrate {target_bitrate // 1000}k -max_muxing_queue_size 4096 "{output_file}"'
 
     subprocess.run(command, shell=True)
 
